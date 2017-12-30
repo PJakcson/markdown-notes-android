@@ -14,7 +14,7 @@ import android.text.style.UnderlineSpan
  * Created by marcneumann on 28.12.17.
  */
 
-class MarkdownFormatter(private val ctx: Context) {
+class MarkdownFormatter(ctx: Context) {
 
     val handlers = listOf<MdElementHandler>(BoldHandler(), UnderlineHandler(), HeadlineHandler(ctx))
     var appliedStyles = mutableListOf<ParcelableSpan>()
