@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
+import com.notes.marcnmn.pandamarkdownnotes.ui.edit.MarkdownFormatter
 
 
 /*
@@ -26,8 +27,8 @@ class MarkdownEditText : EditText {
     constructor(ctx: Context, attrs: AttributeSet, defStyleAttr: Int) : super(ctx, attrs, defStyleAttr)
 
     private fun init() {
-        this.setBackgroundResource(android.R.color.holo_red_light)
-        this.setText("hall *o* was *as*")
+//        this.setBackgroundResource(android.R.color.holo_red_light)
+//        this.setText("hall *o* was *as*")
 
         println("parent $parent")
         if (parent != null) {

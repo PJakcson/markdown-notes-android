@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes
+package com.notes.marcnmn.pandamarkdownnotes.ui.edit
 
 import android.content.Context
 import android.graphics.Color
@@ -9,6 +9,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.TextAppearanceSpan
 import android.text.style.UnderlineSpan
+import com.notes.marcnmn.pandamarkdownnotes.R
 
 /*
  * Created by marcneumann on 28.12.17.
@@ -16,7 +17,7 @@ import android.text.style.UnderlineSpan
 
 class MarkdownFormatter(ctx: Context) {
 
-    val handlers = listOf<MdElementHandler>(BoldHandler(), UnderlineHandler(), HeadlineHandler(ctx))
+    val handlers = listOf(BoldHandler(), UnderlineHandler(), HeadlineHandler(ctx), ItalicHandler())
     var appliedStyles = mutableListOf<ParcelableSpan>()
 
     fun formatText(s: Spannable) {
@@ -42,6 +43,22 @@ class BoldHandler : MdElementHandler {
         val spans = mutableListOf<ParcelableSpan>()
         for (m in rxp.findAll(s)) {
             val bspan = StyleSpan(Typeface.BOLD)
+            s.setSpan(bspan, m.range.start + 1, m.range.endInclusive, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spans.add(bspan)
+
+            spans.addAll(easeStartEnd(s, m.range.start, m.range.endInclusive))
+        }
+        return spans
+    }
+}
+
+class ItalicHandler : MdElementHandler {
+    private val rxp = Regex("/(.*?)/")
+
+    override fun formatText(s: Spannable): List<ParcelableSpan> {
+        val spans = mutableListOf<ParcelableSpan>()
+        for (m in rxp.findAll(s)) {
+            val bspan = StyleSpan(Typeface.ITALIC)
             s.setSpan(bspan, m.range.start + 1, m.range.endInclusive, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             spans.add(bspan)
 
