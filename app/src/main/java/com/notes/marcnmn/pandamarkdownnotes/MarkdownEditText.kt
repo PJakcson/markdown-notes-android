@@ -29,13 +29,11 @@ class MarkdownEditText : EditText {
     private fun init() {
 //        this.setBackgroundResource(android.R.color.holo_red_light)
 //        this.setText("hall *o* was *as*")
-
         println("parent $parent")
         if (parent != null) {
             val v = parent as View
             println(v.width)
         }
-
         formatter.formatText(this.text)
     }
 

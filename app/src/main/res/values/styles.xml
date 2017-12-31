@@ -10,8 +10,26 @@
 
 
     <style name="MarkdownH1">
-        <item name="android:textSize">60sp</item>
-        <!--<item name="android:textColor">?android:textColorPrimary</item>-->
+        <item name="android:textSize">52sp</item>
     </style>
 
+    <style name="MarkdownH2">
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="MarkdownH3">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="MarkdownH4">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="MarkdownHx" />
+
+
+    <style name="MarkdownTag">
+        <item name="android:textSize">12sp</item>
+        <item name="android:color">@android:color/secondary_text_light</item>
+    </style>
 </resources>
