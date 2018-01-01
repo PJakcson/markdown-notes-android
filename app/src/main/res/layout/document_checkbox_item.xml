@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    tools:context="com.notes.marcnmn.pandamarkdownnotes.MainActivity">
+    tools:context="com.notes.marcnmn.pandamarkdownnotes.ui.page.home.MainActivity">
 
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <com.notes.marcnmn.pandamarkdownnotes.MarkdownEditText
+    <com.notes.marcnmn.pandamarkdownnotes.ui.page.write.MarkdownEditText
         android:id="@+id/edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

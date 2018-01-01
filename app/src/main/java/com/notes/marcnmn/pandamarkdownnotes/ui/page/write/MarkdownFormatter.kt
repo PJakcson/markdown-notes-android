@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.edit
+package com.notes.marcnmn.pandamarkdownnotes.ui.page.write
 
 import android.content.Context
 import android.graphics.Color
@@ -6,13 +6,16 @@ import android.graphics.Typeface
 import android.text.Spannable
 import android.text.style.*
 import com.notes.marcnmn.pandamarkdownnotes.R
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
 /*
  * Created by marcneumann on 28.12.17.
  */
 
-class MarkdownFormatter(ctx: Context) {
+@Singleton
+class MarkdownFormatter @Inject constructor(ctx: Context) {
 
     private val handlers = listOf(
             BoldHandler(ctx),
