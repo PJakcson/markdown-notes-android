@@ -1,7 +1,6 @@
-package com.notes.marcnmn.pandamarkdownnotes.di.application
+package com.notes.marcnmn.pandamarkdownnotes.di
 
 import com.notes.marcnmn.pandamarkdownnotes.App
-import com.notes.marcnmn.pandamarkdownnotes.di.activity.ActivityBuilder
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

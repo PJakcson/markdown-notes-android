@@ -2,11 +2,13 @@ package com.notes.marcnmn.pandamarkdownnotes.ui.page.home
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import com.notes.marcnmn.pandamarkdownnotes.R
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseActivity
+import com.notes.marcnmn.pandamarkdownnotes.ui.BaseActivity
+import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.WriteActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), TextWatcher {
@@ -19,9 +21,9 @@ class MainActivity : BaseActivity(), TextWatcher {
 
         println("MainAc $ctx")
 
-//        Handler().postDelayed({
-//            startActivity(Intent(this, WriteActivity::class.java))
-//        }, 4000)
+        android.os.Handler().postDelayed({
+            startActivity(Intent(this, WriteActivity::class.java))
+        }, 4000)
     }
 
     override fun afterTextChanged(s: Editable?) {}

@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes.di.application
+package com.notes.marcnmn.pandamarkdownnotes.di
 
 import android.app.Application
 import com.notes.marcnmn.pandamarkdownnotes.App

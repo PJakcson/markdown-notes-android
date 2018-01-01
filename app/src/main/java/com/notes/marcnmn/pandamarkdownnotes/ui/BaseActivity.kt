@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.page
+package com.notes.marcnmn.pandamarkdownnotes.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
