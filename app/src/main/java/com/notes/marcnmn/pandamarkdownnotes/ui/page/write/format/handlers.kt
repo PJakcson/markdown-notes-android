@@ -1,54 +1,21 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.page.write
+package com.notes.marcnmn.pandamarkdownnotes.ui.page.write.format
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.style.*
 import com.notes.marcnmn.pandamarkdownnotes.R
 import javax.inject.Inject
-import javax.inject.Singleton
-
 
 /*
- * Created by marcneumann on 28.12.17.
+ * Created by marcneumann on 01.01.18.
  */
-
-@Singleton
-class MarkdownFormatter @Inject constructor(ctx: Context) {
-
-    private val handlers = listOf(
-            BoldHandler(ctx),
-            UnderlineHandler(ctx),
-            HeadlineHandler(ctx),
-            ItalicHandler(ctx),
-            StrikethroughHandler(ctx),
-            DrawableHandler(ctx),
-            StdHandler(ctx)
-    )
-
-    private var appliedStyles = mutableListOf<CharacterStyle>()
-
-    fun formatText(s: Spannable) {
-        for (span in appliedStyles) {
-            s.removeSpan(span)
-        }
-        appliedStyles.clear()
-        for (span in s.getSpans(0, s.length - 1, LeadingMarginSpan.Standard::class.java)) {
-            s.removeSpan(span)
-        }
-
-        for (h in handlers) {
-            appliedStyles.addAll(h.formatText(s))
-        }
-    }
-}
 
 interface MdElementHandler {
     fun formatText(s: Spannable): List<CharacterStyle>
 }
 
-class StdHandler(private val ctx: Context) : MdElementHandler {
+class StdHandler @Inject constructor() : MdElementHandler {
     private val rxp = Regex("^[^#+\\-]+(.*?)", RegexOption.MULTILINE)
 
     override fun formatText(s: Spannable): List<CharacterStyle> {
@@ -60,8 +27,7 @@ class StdHandler(private val ctx: Context) : MdElementHandler {
     }
 }
 
-
-class BoldHandler(private val ctx: Context) : MdElementHandler {
+class BoldHandler @Inject constructor(private val ctx: Context) : MdElementHandler {
     private val rxp = Regex("\\*(.*?)\\*")
 
     override fun formatText(s: Spannable): List<CharacterStyle> {
@@ -76,7 +42,7 @@ class BoldHandler(private val ctx: Context) : MdElementHandler {
     }
 }
 
-class ItalicHandler(private val ctx: Context) : MdElementHandler {
+class ItalicHandler @Inject constructor(private val ctx: Context) : MdElementHandler {
     private val rxp = Regex("/(.*?)/")
 
     override fun formatText(s: Spannable): List<CharacterStyle> {
@@ -91,7 +57,7 @@ class ItalicHandler(private val ctx: Context) : MdElementHandler {
     }
 }
 
-class UnderlineHandler(private val ctx: Context) : MdElementHandler {
+class UnderlineHandler @Inject constructor(private val ctx: Context) : MdElementHandler {
     private val rxp = Regex("_(.*?)_")
 
     override fun formatText(s: Spannable): List<CharacterStyle> {
@@ -107,7 +73,7 @@ class UnderlineHandler(private val ctx: Context) : MdElementHandler {
     }
 }
 
-class StrikethroughHandler(private val ctx: Context) : MdElementHandler {
+class StrikethroughHandler @Inject constructor(private val ctx: Context) : MdElementHandler {
     private val rxp = Regex("-(.*?)-")
 
     override fun formatText(s: Spannable): List<CharacterStyle> {
@@ -122,7 +88,7 @@ class StrikethroughHandler(private val ctx: Context) : MdElementHandler {
     }
 }
 
-class DrawableHandler(private val ctx: Context) : MdElementHandler {
+class DrawableHandler @Inject constructor(private val ctx: Context) : MdElementHandler {
     private val rxp = Regex("^(- )", RegexOption.MULTILINE)
     private val rxpChecked = Regex("^(\\+ )", RegexOption.MULTILINE)
 
@@ -142,7 +108,7 @@ class DrawableHandler(private val ctx: Context) : MdElementHandler {
     }
 }
 
-class HeadlineHandler(private val ctx: Context) : MdElementHandler {
+class HeadlineHandler @Inject constructor(private val ctx: Context) : MdElementHandler {
     private val rxp = Regex("^(#+) (.*)", RegexOption.MULTILINE)
 
     override fun formatText(s: Spannable): List<CharacterStyle> {
@@ -168,14 +134,4 @@ class HeadlineHandler(private val ctx: Context) : MdElementHandler {
         }
         return spans
     }
-}
-
-fun easeStartEnd(ctx: Context, s: Spannable, start: Int, end: Int): List<CharacterStyle> {
-    return easeRange(ctx, s, IntRange(start, start + 1)).plus(easeRange(ctx, s, IntRange(end, end + 1)))
-}
-
-fun easeRange(ctx: Context, s: Spannable, r: IntRange): List<CharacterStyle> {
-    val span = ForegroundColorSpan(Color.LTGRAY)
-    s.setSpan(span, r.start, r.endInclusive + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-    return listOf(span)
 }

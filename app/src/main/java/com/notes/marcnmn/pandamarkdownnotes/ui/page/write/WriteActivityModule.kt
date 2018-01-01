@@ -11,7 +11,6 @@ import dagger.Provides
 
 @Module
 class WriteActivityModule {
-
     @Provides
     fun provideContext(ac: WriteActivity): Context = ac
 }
