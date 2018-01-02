@@ -1,26 +1,27 @@
 package com.notes.marcnmn.pandamarkdownnotes.ui.page.home
 
-import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.support.design.widget.BottomNavigationView
+import android.view.MenuItem
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.ui.BaseActivity
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.WriteActivity
+import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes.NotesFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity(), TextWatcher {
+class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        android.os.Handler().postDelayed({
-            startActivity(Intent(this, WriteActivity::class.java))
-        }, 1000)
+        navigation.setOnNavigationItemSelectedListener(this)
+        fragmentManager.beginTransaction().replace(R.id.stub, NotesFragment()).commit()
     }
 
-    override fun afterTextChanged(s: Editable?) {}
-
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.navigation_home -> stub.addView(NotesFragment(this))
+//            R.id.navigation_dashboard -> layoutInflater.inflate(R.layout.view_home_recent, stub, true)
+//        }
+        return true
+    }
 }
