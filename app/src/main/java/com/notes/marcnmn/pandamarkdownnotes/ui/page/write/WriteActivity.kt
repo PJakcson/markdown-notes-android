@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import com.notes.marcnmn.pandamarkdownnotes.R
-import com.notes.marcnmn.pandamarkdownnotes.ui.BaseActivity
+import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseActivity
 import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.format.MarkdownFormatter
 import javax.inject.Inject
 

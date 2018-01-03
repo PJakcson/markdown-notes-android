@@ -30,11 +30,10 @@ class NotesFragment : Fragment(), NotesAdapter.NoteSelected {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProviders.of(this, factory).get(NotesViewModel::class.java)
-        println("model hash ${model.hashCode()}")
         model.notes.observe(this, Observer { if (it != null) adapter.setNotes(it) })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.view_notes_content, container, false)
     }
 

@@ -1,6 +1,5 @@
 package com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes
 
-import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
@@ -12,7 +11,7 @@ import javax.inject.Inject
  * Created by marcneumann on 03.01.18.
  */
 
-class NotesViewModel @Inject constructor() : ViewModel() {
+class NotesViewModel : ViewModel() {
     val notes = MutableLiveData<List<Note>>()
 
     fun addItem(n: Note) {
@@ -24,13 +23,10 @@ class NotesViewModel @Inject constructor() : ViewModel() {
 }
 
 @Suppress("UNCHECKED_CAST")
-class NotesViewModelFactory @Inject constructor(val ctx: Application) : ViewModelProvider.Factory {
-
-    @Inject lateinit var vm: NotesViewModel
+class NotesViewModelFactory @Inject constructor() : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        println("Injection worked!! $ctx")
-        if (modelClass.isAssignableFrom(NotesViewModel::class.java)) return vm as T
+        if (modelClass.isAssignableFrom(NotesViewModel::class.java)) return NotesViewModel() as T
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
 import com.notes.marcnmn.pandamarkdownnotes.R
-import com.notes.marcnmn.pandamarkdownnotes.ui.BaseActivity
+import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseActivity
 import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes.NotesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
