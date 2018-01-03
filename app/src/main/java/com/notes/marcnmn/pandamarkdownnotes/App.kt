@@ -2,19 +2,19 @@ package com.notes.marcnmn.pandamarkdownnotes
 
 import android.app.Activity
 import android.app.Application
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import com.notes.marcnmn.pandamarkdownnotes.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
-import dagger.android.HasFragmentInjector
+import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
 /*
  * Created by marcneumann on 31.12.17.
  */
 
-class App : Application(), HasActivityInjector, HasFragmentInjector {
+class App : Application(), HasActivityInjector, HasSupportFragmentInjector {
 
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
@@ -28,5 +28,5 @@ class App : Application(), HasActivityInjector, HasFragmentInjector {
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector
-    override fun fragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
 }

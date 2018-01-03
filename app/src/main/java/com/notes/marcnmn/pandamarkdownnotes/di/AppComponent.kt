@@ -3,7 +3,7 @@ package com.notes.marcnmn.pandamarkdownnotes.di
 import com.notes.marcnmn.pandamarkdownnotes.App
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 /*
@@ -11,7 +11,7 @@ import javax.inject.Singleton
  */
 
 @Singleton
-@Component(modules = [AppModule::class, AndroidInjectionModule::class, ActivityBuilder::class])
+@Component(modules = [AppModule::class, AndroidSupportInjectionModule::class, ActivityBuilder::class])
 interface AppComponent {
 
     @Component.Builder

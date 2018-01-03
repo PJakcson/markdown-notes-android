@@ -14,7 +14,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(this)
-        fragmentManager.beginTransaction().replace(R.id.stub, NotesFragment()).commit()
+        if (supportFragmentManager.fragments.size <= 0) {
+            supportFragmentManager.beginTransaction().replace(R.id.stub, NotesFragment()).commit()
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

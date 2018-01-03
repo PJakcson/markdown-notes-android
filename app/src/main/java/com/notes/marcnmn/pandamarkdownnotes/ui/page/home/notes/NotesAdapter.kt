@@ -17,6 +17,7 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
     fun setNotes(n: List<Note>) {
         items.clear()
         items.addAll(n)
+        notifyDataSetChanged()
     }
 
     fun setSelectedListener(s: NoteSelected) {
