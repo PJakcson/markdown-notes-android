@@ -2,10 +2,12 @@ package com.notes.marcnmn.pandamarkdownnotes.ui.page.home
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.view.MenuItem
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseActivity
 import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes.NotesFragment
+import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -20,10 +22,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.navigation_home -> stub.addView(NotesFragment(this))
-//            R.id.navigation_dashboard -> layoutInflater.inflate(R.layout.view_home_recent, stub, true)
-//        }
+        val f: Fragment? = when (item.itemId) {
+            R.id.navigation_notes -> NotesFragment()
+            R.id.navigation_settings -> SettingsFragment()
+            else -> null
+        }
+        f?.let { supportFragmentManager.beginTransaction().replace(R.id.stub, it).commit() }
         return true
     }
 }

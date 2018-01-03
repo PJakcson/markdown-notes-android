@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.view_notes_content.*
+import kotlinx.android.synthetic.main.fragment_notes.*
 import java.util.*
 import javax.inject.Inject
 
@@ -34,7 +34,7 @@ class NotesFragment : Fragment(), NotesAdapter.NoteSelected {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.view_notes_content, container, false)
+        return inflater.inflate(R.layout.fragment_notes, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
