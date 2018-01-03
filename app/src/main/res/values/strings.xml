@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">Panda Markdown Notes</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Panda</string>
+    <!-- bottom navigation -->
+    <string name="title_notes">Notes</string>
+    <string name="title_tags">Tags</string>
+    <string name="title_trash">Trash</string>
+    <string name="title_settings">Settings</string>
 </resources>
