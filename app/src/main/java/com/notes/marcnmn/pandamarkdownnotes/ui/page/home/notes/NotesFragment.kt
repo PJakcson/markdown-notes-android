@@ -16,7 +16,6 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_notes.*
 import javax.inject.Inject
 
-
 /*
  * Created by marcneumann on 02.01.18.
  */

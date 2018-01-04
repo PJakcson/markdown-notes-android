@@ -26,7 +26,9 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
         diffRes.dispatchUpdatesTo(this)
     }
 
-    fun setSelectedListener(s: NoteSelected) = { selectedListener = s }
+    fun setSelectedListener(s: NoteSelected) {
+        selectedListener = s
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.notes_item, parent, false)
