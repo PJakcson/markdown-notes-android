@@ -38,9 +38,16 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
     override fun onBindViewHolder(h: ViewHolder?, p: Int) {
         if (h == null || p < 0 || p >= items.size) return
         h.updateModel(items[p])
+
         h.itemView.setOnClickListener {
             val pos = h.adapterPosition
             if (pos >= 0 && pos < items.size) selectedListener?.selected(items[pos])
+        }
+
+        h.itemView.setOnLongClickListener {
+            val pos = h.adapterPosition
+            if (pos >= 0 && pos < items.size) selectedListener?.removed(items[pos])
+            true
         }
     }
 
@@ -77,6 +84,7 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
 
     interface NoteSelected {
         fun selected(n: Note)
+        fun removed(n: Note)
     }
 }
 
