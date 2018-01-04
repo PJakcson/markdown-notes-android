@@ -1,5 +1,6 @@
 package com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes
 
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -16,17 +17,16 @@ import javax.inject.Inject
 
 class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
     private var selectedListener: NoteSelected? = null
-    private val items = mutableListOf<Note>()
+    private var items = listOf<Note>()
 
     fun setNotes(n: List<Note>) {
-        items.clear()
-        items.addAll(n)
-        notifyDataSetChanged()
+        Collections.sort(n, { o1, o2 -> o2.edited.compareTo(o1.edited) })
+        val diffRes = DiffUtil.calculateDiff(NotesDiffCallback(items, n))
+        items = n
+        diffRes.dispatchUpdatesTo(this)
     }
 
-    fun setSelectedListener(s: NoteSelected) {
-        selectedListener = s
-    }
+    fun setSelectedListener(s: NoteSelected) = { selectedListener = s }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.notes_item, parent, false)
@@ -76,4 +76,15 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
     interface NoteSelected {
         fun selected(n: Note)
     }
+}
+
+class NotesDiffCallback(val o: List<Note>, val n: List<Note>) : DiffUtil.Callback() {
+
+    override fun areItemsTheSame(op: Int, np: Int) = o[op].id == n[np].id
+
+    override fun getOldListSize(): Int = o.size
+
+    override fun getNewListSize(): Int = n.size
+
+    override fun areContentsTheSame(op: Int, np: Int) = o[op] == n[np]
 }
