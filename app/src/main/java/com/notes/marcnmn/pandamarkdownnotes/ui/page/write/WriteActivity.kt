@@ -30,6 +30,7 @@ class WriteActivity : BaseActivity(), TextWatcher {
             edit.setText(note.raw, TextView.BufferType.EDITABLE)
         }
         edit.addTextChangedListener(this)
+
     }
 
     override fun afterTextChanged(s: Editable?) {
