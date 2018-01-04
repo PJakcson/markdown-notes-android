@@ -29,7 +29,7 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.view_notes_item, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.notes_item, parent, false)
         return ViewHolder(v)
     }
 
