@@ -50,7 +50,7 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
         private var edited = v.findViewById<TextView>(R.id.last_edited)
 
         fun updateModel(n: Note) {
-            title.text = n.raw
+            title.text = n.id
             content.text = n.raw
             edited.text = duration(Calendar.getInstance().time, n.edited)
 

@@ -14,7 +14,6 @@ import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_notes.*
-import java.util.*
 import javax.inject.Inject
 
 
@@ -43,10 +42,7 @@ class NotesFragment : Fragment(), NotesAdapter.NoteSelected {
         adapter.setSelectedListener(this)
         recycler.adapter = adapter
 
-        add_button.setOnClickListener {
-            val t = Calendar.getInstance().time
-            model.addItem(Note("", Calendar.getInstance().time, t))
-        }
+        add_button.setOnClickListener { model.addItem(Note()) }
     }
 
     override fun onAttach(context: Context?) {

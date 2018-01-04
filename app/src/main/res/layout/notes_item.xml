@@ -5,8 +5,23 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
     tools:context="com.notes.marcnmn.pandamarkdownnotes.ui.page.home.MainActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/last_edited"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Notiz: Tod " />
 
     <TextView
         android:id="@+id/last_edited"
@@ -20,21 +35,12 @@
         tools:text="2W" />
 
     <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:lines="1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintStart_toEndOf="@id/last_edited"
-        tools:text="Notiz: Todo" />
-
-    <TextView
         android:id="@+id/content"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:lines="2"
+        app:layout_constraintEnd_toEndOf="@id/title"
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="Straub: 07821 - 91 58-0, straub-stb.de * Schwendenmann: 07821 9145 - 0, steuerberater-schwendemann.de" />
