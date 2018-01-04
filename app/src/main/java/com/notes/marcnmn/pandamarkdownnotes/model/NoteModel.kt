@@ -10,7 +10,20 @@ import javax.inject.Singleton
 
 @Singleton
 class NoteModel @Inject constructor() {
-    val notes = MutableLiveData<List<Note>>()
+    val notes = MutableLiveData<MutableList<Note>>()
+
+    fun findItemById(id: String) = notes.value?.find { it.id == id }
+
+    fun updateItem(n: Note) {
+        val f = notes.value ?: return
+        val index = f.indexOfFirst { it.id == n.id }
+        if (index < 0) {
+            addItem(n)
+            return
+        }
+        f[index] = n
+        notes.postValue(f)
+    }
 
     fun addItem(n: Note) {
         val v = mutableListOf(n)
@@ -21,7 +34,7 @@ class NoteModel @Inject constructor() {
 
     fun removeItemById(id: String) {
         var f = notes.value ?: return
-        f = f.filter { it.id != id }
+        f = f.filter { it.id != id }.toMutableList()
         notes.postValue(f)
     }
 }

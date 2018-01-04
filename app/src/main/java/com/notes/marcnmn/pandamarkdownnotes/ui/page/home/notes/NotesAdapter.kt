@@ -20,6 +20,8 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
     private var items = listOf<Note>()
 
     fun setNotes(n: List<Note>) {
+        println("${items.hashCode()} ${n.hashCode()}")
+
         Collections.sort(n, { o1, o2 -> o2.edited.compareTo(o1.edited) })
         val diffRes = DiffUtil.calculateDiff(NotesDiffCallback(items, n))
         items = n
@@ -62,10 +64,6 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
             title.text = n.id
             content.text = n.raw
             edited.text = duration(Calendar.getInstance().time, n.edited)
-
-            val dur = (Calendar.getInstance().time.time - n.edited.time) / 1000
-            content.text = String.format("%d:%02d:%02d", dur / 3600, (dur % 3600) / 60, (dur % 60))
-
         }
     }
 
@@ -88,7 +86,7 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
     }
 }
 
-class NotesDiffCallback(val o: List<Note>, val n: List<Note>) : DiffUtil.Callback() {
+class NotesDiffCallback(private val o: List<Note>, private val n: List<Note>) : DiffUtil.Callback() {
 
     override fun areItemsTheSame(op: Int, np: Int) = o[op].id == n[np].id
 
@@ -96,5 +94,5 @@ class NotesDiffCallback(val o: List<Note>, val n: List<Note>) : DiffUtil.Callbac
 
     override fun getNewListSize(): Int = n.size
 
-    override fun areContentsTheSame(op: Int, np: Int) = o[op] == n[np]
+    override fun areContentsTheSame(op: Int, np: Int) = false
 }

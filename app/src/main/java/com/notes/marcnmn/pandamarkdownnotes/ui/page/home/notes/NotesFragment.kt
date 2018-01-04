@@ -37,7 +37,7 @@ class NotesFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
-        super.onAttach(context)
         model.notes.observe(this, Observer { if (it != null) adapter.setNotes(it) })
+        super.onAttach(context)
     }
 }

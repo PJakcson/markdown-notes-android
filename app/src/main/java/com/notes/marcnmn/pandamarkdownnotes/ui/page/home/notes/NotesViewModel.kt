@@ -11,6 +11,7 @@ import javax.inject.Inject
 /*
  * Created by marcneumann on 03.01.18.
  */
+@Suppress("MemberVisibilityCanPrivate")
 class NotesViewModel @Inject constructor(val ctx: Context, val model: NoteModel) : NotesAdapter.NoteSelected {
     val notes = model.notes
 
