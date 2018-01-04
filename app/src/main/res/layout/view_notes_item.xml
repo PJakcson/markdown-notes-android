@@ -5,22 +5,56 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
+    android:padding="16dp"
     tools:context="com.notes.marcnmn.pandamarkdownnotes.ui.page.home.MainActivity">
 
-    <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/checkbox"
+    <TextView
+        android:id="@+id/last_edited"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <com.notes.marcnmn.pandamarkdownnotes.ui.page.write.MarkdownEditText
-        android:id="@+id/edit"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/checkbox"
-        tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." />
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@android:color/secondary_text_dark_nodisable"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        tools:text="2W" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintStart_toEndOf="@id/last_edited"
+        tools:text="Notiz: Todo" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lines="2"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="Straub: 07821 - 91 58-0, straub-stb.de * Schwendenmann: 07821 9145 - 0, steuerberater-schwendemann.de" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/pinned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pin_off"
+        app:layout_constraintBottom_toBottomOf="@+id/content"
+        app:layout_constraintEnd_toEndOf="@+id/last_edited"
+        app:layout_constraintStart_toStartOf="@+id/last_edited"
+        app:layout_constraintTop_toTopOf="@+id/content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content" />
 
 </android.support.constraint.ConstraintLayout>
