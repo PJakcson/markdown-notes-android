@@ -43,7 +43,10 @@ class NotesFragment : Fragment(), NotesAdapter.NoteSelected {
         adapter.setSelectedListener(this)
         recycler.adapter = adapter
 
-        add_button.setOnClickListener { model.addItem(Note("Yoyoyoy ${Date()}")) }
+        add_button.setOnClickListener {
+            val t = Calendar.getInstance().time
+            model.addItem(Note("", Calendar.getInstance().time, t))
+        }
     }
 
     override fun onAttach(context: Context?) {

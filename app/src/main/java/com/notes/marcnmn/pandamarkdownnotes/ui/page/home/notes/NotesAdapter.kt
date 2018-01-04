@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
+import java.util.*
 import javax.inject.Inject
 
 /*
@@ -51,7 +52,24 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
         fun updateModel(n: Note) {
             title.text = n.raw
             content.text = n.raw
-            edited.text = "2W"
+            edited.text = duration(Calendar.getInstance().time, n.edited)
+
+            val dur = (Calendar.getInstance().time.time - n.edited.time) / 1000
+            content.text = String.format("%d:%02d:%02d", dur / 3600, (dur % 3600) / 60, (dur % 60))
+
+        }
+    }
+
+    private fun duration(from: Date, to: Date): String {
+        val dur = (from.time - to.time) / 1000
+        return when {
+            dur < 60 -> "${dur}s" // seconds
+            dur < 3600 -> "${dur / 60 % 60}m" // minutes
+            dur / 3600 < 24 -> "${dur / 3600}h" // hours
+            dur / (3600 * 24) < 7 -> "${dur / (3600 * 24)}D" // days
+            dur / (3600 * 24 * 7) < 5 -> "${dur / (3600 * 24 * 7)}W" // weeks
+            dur / (3600 * 24 * 365) < 1 -> "${dur / (3600 * 24 * 31)}M" // months
+            else -> "${dur / (3600 * 24 * 365)}Y" // years
         }
     }
 
