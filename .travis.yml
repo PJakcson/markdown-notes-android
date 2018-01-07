@@ -15,7 +15,6 @@ android:
     - android-27
     - tools
     - add-on
-    - sys-img-armeabi-v7a-android-27
 
     - extra-google-m2repository
     - extra-android-support
@@ -25,6 +24,11 @@ android:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
     - '.+'
+
+script:
+  # By default Travis-ci executes './gradlew build connectedCheck' if no 'script:' section found.
+  - ./gradlew build
+
 
 notifications:
   email: false
