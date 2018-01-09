@@ -15,7 +15,32 @@ import javax.inject.Inject
  * Created by marcneumann on 03.01.18.
  */
 
-class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    private var title = v.findViewById<TextView>(R.id.title)
+    private var content = v.findViewById<TextView>(R.id.content)
+    private var edited = v.findViewById<TextView>(R.id.last_edited)
+
+    fun updateModel(n: Note) {
+        title.text = n.id
+        content.text = n.raw
+        edited.text = duration(Calendar.getInstance().time, n.edited)
+    }
+
+    private fun duration(from: Date, to: Date): String {
+        val dur = (from.time - to.time) / 1000
+        return when {
+            dur < 60 -> "${dur}s" // seconds
+            dur < 3600 -> "${dur / 60 % 60}m" // minutes
+            dur / 3600 < 24 -> "${dur / 3600}h" // hours
+            dur / (3600 * 24) < 7 -> "${dur / (3600 * 24)}D" // days
+            dur / (3600 * 24 * 7) < 5 -> "${dur / (3600 * 24 * 7)}W" // weeks
+            dur / (3600 * 24 * 365) < 1 -> "${dur / (3600 * 24 * 31)}M" // months
+            else -> "${dur / (3600 * 24 * 365)}Y" // years
+        }
+    }
+}
+
+class NotesAdapter @Inject constructor() : RecyclerView.Adapter<ViewHolder>() {
     private var selectedListener: NoteSelected? = null
     private var items = listOf<Note>()
 
@@ -54,31 +79,6 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<NotesAdapter.Vie
     }
 
     override fun getItemCount(): Int = items.size
-
-    inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        private var title = v.findViewById<TextView>(R.id.title)
-        private var content = v.findViewById<TextView>(R.id.content)
-        private var edited = v.findViewById<TextView>(R.id.last_edited)
-
-        fun updateModel(n: Note) {
-            title.text = n.id
-            content.text = n.raw
-            edited.text = duration(Calendar.getInstance().time, n.edited)
-        }
-    }
-
-    private fun duration(from: Date, to: Date): String {
-        val dur = (from.time - to.time) / 1000
-        return when {
-            dur < 60 -> "${dur}s" // seconds
-            dur < 3600 -> "${dur / 60 % 60}m" // minutes
-            dur / 3600 < 24 -> "${dur / 3600}h" // hours
-            dur / (3600 * 24) < 7 -> "${dur / (3600 * 24)}D" // days
-            dur / (3600 * 24 * 7) < 5 -> "${dur / (3600 * 24 * 7)}W" // weeks
-            dur / (3600 * 24 * 365) < 1 -> "${dur / (3600 * 24 * 31)}M" // months
-            else -> "${dur / (3600 * 24 * 365)}Y" // years
-        }
-    }
 
     interface NoteSelected {
         fun selected(n: Note)

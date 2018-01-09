@@ -1,8 +1,8 @@
 package com.notes.marcnmn.pandamarkdownnotes.model
 
-import android.arch.lifecycle.MutableLiveData
 import android.os.Handler
 import com.notes.marcnmn.pandamarkdownnotes.storage.Storage
+import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,45 +13,41 @@ import javax.inject.Singleton
 
 @Singleton
 class NoteModel @Inject constructor(var storage: Storage) {
-    val notes = MutableLiveData<MutableList<Note>>()
+    val notes: BehaviorSubject<List<Note>> = BehaviorSubject.createDefault(listOf())
+
+    init {
+        notes.onNext(storage.restoreNotes())
+    }
 
     fun findItemById(id: String) = notes.value?.find { it.id == id }
 
     fun updateItem(n: Note) {
-        val f = notes.value ?: return
+        val f = notes.value.toMutableList()
         val index = f.indexOfFirst { it.id == n.id }
         if (index < 0) {
             addItem(n)
             return
         }
         f[index] = n
-        notes.postValue(f)
+        notes.onNext(f.toList())
 
         Handler().post { flush() }
     }
 
     fun addItem(n: Note) {
-        val v = mutableListOf(n)
-        val f = notes.value
-        if (f != null) v.addAll(0, f)
-        notes.postValue(v)
-
+        val f = notes.value.toMutableList()
+        f.add(n)
+        notes.onNext(f.toList())
         Handler().post { flush() }
     }
 
     fun removeItemById(id: String) {
-        var f = notes.value ?: return
-        f = f.filter { it.id != id }.toMutableList()
-        notes.postValue(f)
+        notes.onNext(notes.value.filter { it.id != id })
 
         Handler().post { flush() }
     }
 
-    fun flush() {
+    private fun flush() {
         storage.saveNotes(notes.value ?: listOf())
-    }
-
-    init {
-        notes.postValue(storage.restoreNotes().toMutableList())
     }
 }

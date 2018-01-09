@@ -1,16 +1,17 @@
 package com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes
 
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.hannesdorfmann.mosby3.mvi.MviFragment
+import com.jakewharton.rxbinding2.view.RxView
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
 import dagger.android.support.AndroidSupportInjection
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_notes.*
 import javax.inject.Inject
 
@@ -18,9 +19,10 @@ import javax.inject.Inject
  * Created by marcneumann on 02.01.18.
  */
 
-class NotesFragment : Fragment() {
+class NotesFragment : MviFragment<NotesView, NotesPresenter>(), NotesView {
     @Inject lateinit var adapter: NotesAdapter
     @Inject lateinit var model: NotesViewModel
+    @Inject lateinit var presenter: NotesPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_notes, container, false)
@@ -35,9 +37,19 @@ class NotesFragment : Fragment() {
         add_button.setOnClickListener { model.addItem(Note()) }
     }
 
+    override fun render(viewState: NotesViewState) {
+        adapter.setNotes(viewState.notes)
+        progress.visibility = if (viewState.loading) View.VISIBLE else View.GONE
+    }
+
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
-        model.notes.observe(this, Observer { if (it != null) adapter.setNotes(it) })
         super.onAttach(context)
     }
+
+    override fun createPresenter(): NotesPresenter {
+        return presenter
+    }
+
+    override fun addNoteIntent(): Observable<Note> = RxView.clicks(add_button).map { Note() }
 }
