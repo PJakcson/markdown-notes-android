@@ -2,6 +2,7 @@ package com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes
 
 import android.content.Context
 import android.os.Bundle
+import android.support.transition.TransitionManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,18 @@ class NotesFragment : MviFragment<NotesView, NotesPresenter>(), NotesView {
     override fun render(viewState: NotesViewState) {
         adapter.setNotes(viewState.notes)
         progress.visibility = if (viewState.loading) View.VISIBLE else View.GONE
+
+        val sn = viewState.notes.find { it.id == viewState.selected } ?: return
+
+//        val constraintSet2 = ConstraintSet()
+//        constraintSet2.clone(constraint)
+//        constraintSet2.centerHorizontally(R.id.edit, R.id.constraint)
+
+
+        TransitionManager.beginDelayedTransition(constraint)
+        edit.visibility = View.VISIBLE
+//        edit.setText(sn.raw, TextView.BufferType.EDITABLE)
+//        recycler.translationX = (-500).toFloat()
     }
 
     override fun onAttach(context: Context?) {
@@ -47,7 +60,7 @@ class NotesFragment : MviFragment<NotesView, NotesPresenter>(), NotesView {
 
     override fun addNoteIntent(): Observable<Note> = RxView.clicks(add_button).map { Note() }
 
-    override fun noteSelectedIntent(): Observable<Note> = adapter.selectedSubj.hide()
+    override fun noteSelectedIntent(): Observable<Note?> = adapter.selectedSubj
 
     override fun noteRemovedIntent(): Observable<Note> = adapter.removedSubj.hide()
 }

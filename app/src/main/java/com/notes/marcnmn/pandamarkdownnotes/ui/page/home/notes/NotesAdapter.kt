@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
 import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import java.util.*
 import javax.inject.Inject
 
@@ -43,8 +44,8 @@ class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
 class NotesAdapter @Inject constructor() : RecyclerView.Adapter<ViewHolder>() {
     private var items = listOf<Note>()
-    val selectedSubj = PublishSubject.create<Note>()
-    val removedSubj = PublishSubject.create<Note>()
+    val selectedSubj: Subject<Note> = PublishSubject.create()
+    val removedSubj: Subject<Note> = PublishSubject.create()
 
 
     fun setNotes(n: List<Note>) {
