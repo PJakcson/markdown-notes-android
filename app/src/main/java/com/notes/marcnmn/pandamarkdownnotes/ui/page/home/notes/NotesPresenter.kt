@@ -17,7 +17,11 @@ class NotesPresenter @Inject constructor(val model: NoteModel) : MviBasePresente
     private val disposable = CompositeDisposable()
 
     override fun bindIntents() {
-        disposable.addAll(intent { it.addNoteIntent() }.map(model::addItem).subscribe())
+        disposable.addAll(
+                intent { it.addNoteIntent() }.map(model::addItem).subscribe(),
+                intent { it.noteRemovedIntent().map { it.id } }.map(model::removeItemById).subscribe()
+        )
+
         val no = model.notes.map { NotesViewState.showResultState(it) }
                 .startWith(NotesViewState.showLoadingState())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -32,6 +36,8 @@ class NotesPresenter @Inject constructor(val model: NoteModel) : MviBasePresente
 
 interface NotesView : MvpView {
     fun addNoteIntent(): Observable<Note>
+    fun noteSelectedIntent(): Observable<Note>
+    fun noteRemovedIntent(): Observable<Note>
     fun render(viewState: NotesViewState)
 }
 

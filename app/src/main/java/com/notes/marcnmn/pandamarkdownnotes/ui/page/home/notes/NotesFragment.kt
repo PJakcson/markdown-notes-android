@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 class NotesFragment : MviFragment<NotesView, NotesPresenter>(), NotesView {
     @Inject lateinit var adapter: NotesAdapter
-    @Inject lateinit var model: NotesViewModel
     @Inject lateinit var presenter: NotesPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,10 +30,7 @@ class NotesFragment : MviFragment<NotesView, NotesPresenter>(), NotesView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycler.layoutManager = LinearLayoutManager(activity)
-        adapter.setSelectedListener(model)
         recycler.adapter = adapter
-
-        add_button.setOnClickListener { model.addItem(Note()) }
     }
 
     override fun render(viewState: NotesViewState) {
@@ -47,9 +43,11 @@ class NotesFragment : MviFragment<NotesView, NotesPresenter>(), NotesView {
         super.onAttach(context)
     }
 
-    override fun createPresenter(): NotesPresenter {
-        return presenter
-    }
+    override fun createPresenter(): NotesPresenter = presenter
 
     override fun addNoteIntent(): Observable<Note> = RxView.clicks(add_button).map { Note() }
+
+    override fun noteSelectedIntent(): Observable<Note> = adapter.selectedSubj.hide()
+
+    override fun noteRemovedIntent(): Observable<Note> = adapter.removedSubj.hide()
 }

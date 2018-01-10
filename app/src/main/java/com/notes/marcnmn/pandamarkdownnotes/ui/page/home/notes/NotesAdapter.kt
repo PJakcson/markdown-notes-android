@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
+import io.reactivex.subjects.PublishSubject
 import java.util.*
 import javax.inject.Inject
 
@@ -41,20 +42,16 @@ class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 }
 
 class NotesAdapter @Inject constructor() : RecyclerView.Adapter<ViewHolder>() {
-    private var selectedListener: NoteSelected? = null
     private var items = listOf<Note>()
+    val selectedSubj = PublishSubject.create<Note>()
+    val removedSubj = PublishSubject.create<Note>()
+
 
     fun setNotes(n: List<Note>) {
-        println("${items.hashCode()} ${n.hashCode()}")
-
         Collections.sort(n, { o1, o2 -> o2.edited.compareTo(o1.edited) })
         val diffRes = DiffUtil.calculateDiff(NotesDiffCallback(items, n))
         items = n
         diffRes.dispatchUpdatesTo(this)
-    }
-
-    fun setSelectedListener(s: NoteSelected) {
-        selectedListener = s
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -68,22 +65,17 @@ class NotesAdapter @Inject constructor() : RecyclerView.Adapter<ViewHolder>() {
 
         h.itemView.setOnClickListener {
             val pos = h.adapterPosition
-            if (pos >= 0 && pos < items.size) selectedListener?.selected(items[pos])
+            if (pos >= 0 && pos < items.size) selectedSubj.onNext(items[pos])
         }
 
         h.itemView.setOnLongClickListener {
             val pos = h.adapterPosition
-            if (pos >= 0 && pos < items.size) selectedListener?.removed(items[pos])
+            if (pos >= 0 && pos < items.size) removedSubj.onNext(items[pos])
             true
         }
     }
 
     override fun getItemCount(): Int = items.size
-
-    interface NoteSelected {
-        fun selected(n: Note)
-        fun removed(n: Note)
-    }
 }
 
 class NotesDiffCallback(private val o: List<Note>, private val n: List<Note>) : DiffUtil.Callback() {
