@@ -4,12 +4,12 @@ import android.Manifest
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat
 import android.view.MenuItem
 import com.notes.marcnmn.pandamarkdownnotes.R
+import com.notes.marcnmn.pandamarkdownnotes.ui.dialog.FingerprintFragment
 import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.notes.NotesFragment
 import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.settings.SettingsFragment
 import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseActivity
@@ -37,29 +37,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         if (!fm.hasEnrolledFingerprints())
             Snackbar.make(container, "no fingerprints", Snackbar.LENGTH_LONG).show()
 
-        fm.authenticate(null, 0, null, object : FingerprintManagerCompat.AuthenticationCallback() {
-            override fun onAuthenticationError(errMsgId: Int, errString: CharSequence?) {
-                super.onAuthenticationError(errMsgId, errString)
-                println("onAuthenticationError")
-            }
-
-            override fun onAuthenticationSucceeded(result: FingerprintManagerCompat.AuthenticationResult?) {
-                super.onAuthenticationSucceeded(result)
-                println("onAuthenticationSucceeded")
-            }
-
-            override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence?) {
-                super.onAuthenticationHelp(helpMsgId, helpString)
-                println("onAuthenticationHelp")
-            }
-
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
-                println("onAuthenticationFailed")
-            }
-        }, null)
-
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.USE_FINGERPRINT), 0)
+        FingerprintFragment().show(supportFragmentManager, "dialog")
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
