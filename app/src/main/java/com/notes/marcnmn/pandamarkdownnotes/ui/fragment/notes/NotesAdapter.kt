@@ -23,8 +23,8 @@ class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
     private var edited = v.findViewById<TextView>(R.id.last_edited)
 
     fun updateModel(n: Note) {
-        title.text = n.id
-        content.text = n.text
+        title.text = Note.header(n)
+        content.text = Note.body(n)
         edited.text = duration(Calendar.getInstance().time, n.edited)
     }
 

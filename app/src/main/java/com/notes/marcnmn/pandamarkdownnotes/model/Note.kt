@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 import java.util.*
 
+
 /*
  * Created by marcneumann on 02.01.18.
  */
@@ -27,7 +28,6 @@ data class Note(
         var readers: List<String>,
         var editors: List<String>
 ) : Serializable, Parcelable {
-
     constructor(owner: User, initialText: String?) : this(
             UUID.randomUUID().toString(),
             owner.id,
@@ -40,4 +40,13 @@ data class Note(
             emptyList(),
             emptyList()
     )
+
+    companion object {
+        private val ls = System.lineSeparator()
+
+        fun header(n: Note): String = n.text.split(ls).let { if (it.isEmpty()) "" else it[0] }
+                .let { it.replace("#", "") }
+
+        fun body(n: Note): String = n.text.split(ls).let { if (it.size < 2) "" else it[1] }
+    }
 }

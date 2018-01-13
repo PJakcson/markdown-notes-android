@@ -1,10 +1,7 @@
 package com.notes.marcnmn.pandamarkdownnotes.markdown
 
-import android.content.Context
-import android.graphics.Color
 import android.text.Spannable
 import android.text.style.CharacterStyle
-import android.text.style.ForegroundColorSpan
 import android.text.style.LeadingMarginSpan
 import javax.inject.Inject
 
@@ -38,14 +35,4 @@ class MarkdownFormatter @Inject constructor(
             appliedStyles.addAll(h.formatText(s))
         }
     }
-}
-
-fun easeStartEnd(ctx: Context, s: Spannable, start: Int, end: Int): List<CharacterStyle> {
-    return easeRange(ctx, s, IntRange(start, start + 1)).plus(easeRange(ctx, s, IntRange(end, end + 1)))
-}
-
-fun easeRange(ctx: Context, s: Spannable, r: IntRange): List<CharacterStyle> {
-    val span = ForegroundColorSpan(Color.LTGRAY)
-    s.setSpan(span, r.start, r.endInclusive + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-    return listOf(span)
 }

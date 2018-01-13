@@ -1,6 +1,7 @@
 package com.notes.marcnmn.pandamarkdownnotes.markdown
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.style.*
@@ -129,9 +130,23 @@ class HeadlineHandler @Inject constructor(private val ctx: Context) : MdElementH
             }
             if (text.range.isEmpty()) continue
             val span = TextAppearanceSpan(ctx, hStyle)
-            s.setSpan(span, text.range.start, text.range.endInclusive, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
+            s.setSpan(span, text.range.start, text.range.endInclusive + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
             spans.add(span)
         }
         return spans
     }
+}
+
+fun easeStartEnd(ctx: Context, s: Spannable, start: Int, end: Int): List<CharacterStyle> {
+    return easeRange(ctx, s, IntRange(start, start)).plus(easeRange(ctx, s, IntRange(end, end)))
+}
+
+fun easeRange(ctx: Context, s: Spannable, r: IntRange): List<CharacterStyle> {
+    var end = if (r.start > r.endInclusive + 1) r.start else r.endInclusive + 1
+    end = if (end > s.length) s.length - 1 else end
+    val start = if (r.start >= s.length) s.length - 1 else r.start
+
+    val span = ForegroundColorSpan(Color.LTGRAY)
+    s.setSpan(span, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+    return listOf(span)
 }
