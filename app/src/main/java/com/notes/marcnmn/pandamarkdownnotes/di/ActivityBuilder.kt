@@ -1,11 +1,10 @@
 package com.notes.marcnmn.pandamarkdownnotes.di
 
+import android.app.Activity
 import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.MainActivity
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.MainActivityModule
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes.NotesFragment
 import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.WriteActivity
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.WriteActivityModule
 import dagger.Module
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 
 
@@ -17,14 +16,24 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilder {
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(MM::class))
     abstract fun bindMainActivity(): MainActivity
 
     @ActivityScope
-    @ContributesAndroidInjector()
-    abstract fun bindNotesFragment(): NotesFragment
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = arrayOf(WriteActivityModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(WM::class))
     abstract fun bindWriteActivity(): WriteActivity
 }
+
+@Module
+abstract class ActivityModule<in T : Activity> {
+
+    @Provides
+    fun providesContext(f: T): Activity = f
+}
+
+@Module
+class MM : ActivityModule<MainActivity>()
+
+@Module
+class WM : ActivityModule<MainActivity>()
+

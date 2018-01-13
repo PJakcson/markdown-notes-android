@@ -12,32 +12,18 @@ import java.util.*
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class Note(
+data class User(
         val id: String,
-        var owner: String,
-        var text: String,
         val created: Date,
         var edited: Date,
+        val forename: String?,
+        val surname: String?
+) : Parcelable, Serializable {
 
-        var secure: Boolean,
-
-        var header: String,
-        var description: String?,
-
-        var readers: List<String>,
-        var editors: List<String>
-) : Serializable, Parcelable {
-
-    constructor(owner: User, initialText: String?) : this(
+    constructor() : this(
             UUID.randomUUID().toString(),
-            owner.id,
-            initialText ?: "",
             Calendar.getInstance().time,
             Calendar.getInstance().time,
-            false,
-            "",
-            "",
-            emptyList(),
-            emptyList()
+            "", ""
     )
 }

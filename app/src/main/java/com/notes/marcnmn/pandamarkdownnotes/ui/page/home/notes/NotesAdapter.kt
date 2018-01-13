@@ -24,7 +24,7 @@ class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
     fun updateModel(n: Note) {
         title.text = n.id
-        content.text = n.raw
+        content.text = n.text
         edited.text = duration(Calendar.getInstance().time, n.edited)
     }
 

@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.page.home.editor
+package com.notes.marcnmn.pandamarkdownnotes.ui.page.write.editor
 
 import android.content.Context
 import android.os.Bundle

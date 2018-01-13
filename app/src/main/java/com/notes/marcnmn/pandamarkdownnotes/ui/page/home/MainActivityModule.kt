@@ -1,7 +1,6 @@
 package com.notes.marcnmn.pandamarkdownnotes.ui.page.home
 
-import android.content.Context
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.MainActivity
+import android.app.Activity
 import dagger.Module
 import dagger.Provides
 
@@ -14,5 +13,5 @@ import dagger.Provides
 class MainActivityModule {
 
     @Provides
-    fun provideContext(ac: MainActivity): Context = ac
+    fun provideContext(ac: MainActivity): Activity = ac
 }

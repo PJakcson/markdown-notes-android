@@ -4,6 +4,8 @@ import com.hannesdorfmann.mosby3.mvi.MviBasePresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
 import com.notes.marcnmn.pandamarkdownnotes.model.NoteModel
+import com.notes.marcnmn.pandamarkdownnotes.model.User
+import com.notes.marcnmn.pandamarkdownnotes.navigation.Navigator
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -14,22 +16,32 @@ import javax.inject.Inject
  * Created by marcneumann on 09.01.18.
  */
 
-class NotesPresenter @Inject constructor(val model: NoteModel) : MviBasePresenter<NotesView, NotesViewState>() {
+@Suppress("MemberVisibilityCanPrivate")
+class NotesPresenter @Inject constructor(val model: NoteModel, val nav: Navigator, val user: User) :
+        MviBasePresenter<NotesView, NotesViewState>() {
     private val disposable = CompositeDisposable()
 
     override fun bindIntents() {
         disposable.addAll(
-                intent { it.addNoteIntent() }.map(model::addItem).subscribe(),
+                intent { it.addNoteIntent() }.map { Note(user, "") }.map(model::addItem).subscribe(),
                 intent { it.noteRemovedIntent().map { it.id } }.map(model::removeItemById).subscribe()
         )
 
-        val selObs = intent { it.noteSelectedIntent().map { it.id } }.startWith("")
+        val selObs = intent { it.noteSelectedIntent().map { it.id } }
+                .startWith("")
+                .doOnNext(this::handleSelected)
+
         val obs = Observables.combineLatest(model.notes, selObs)
                 .map { NotesViewState.showNoteState(it.first, it.second) }
                 .startWith(NotesViewState.showLoadingState())
                 .observeOn(AndroidSchedulers.mainThread())
 
         subscribeViewState(obs, NotesView::render)
+    }
+
+    private fun handleSelected(id: String) {
+        val n = model.findItemById(id) ?: return
+        nav.startWrite(n)
     }
 
     override fun unbindIntents() {
@@ -39,7 +51,7 @@ class NotesPresenter @Inject constructor(val model: NoteModel) : MviBasePresente
 }
 
 interface NotesView : MvpView {
-    fun addNoteIntent(): Observable<Note>
+    fun addNoteIntent(): Observable<Any>
     fun noteSelectedIntent(): Observable<Note?>
     fun noteRemovedIntent(): Observable<Note>
     fun render(viewState: NotesViewState)

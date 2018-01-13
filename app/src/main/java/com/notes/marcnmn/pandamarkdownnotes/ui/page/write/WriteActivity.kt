@@ -3,6 +3,7 @@ package com.notes.marcnmn.pandamarkdownnotes.ui.page.write
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.transition.Fade
 import android.widget.TextView
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
@@ -23,20 +24,19 @@ class WriteActivity : BaseActivity(), TextWatcher {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
 
-        if (intent != null) {
-            val id = intent.getStringExtra("id")
-            val n = model.findItemById(id) ?: throw Error("missing note with id $id")
-            note = n
-            edit.setText(note.raw, TextView.BufferType.EDITABLE)
-        }
-        edit.addTextChangedListener(this)
+        window.enterTransition = Fade()
 
+        if (intent == null) return
+
+        note = intent.getParcelableExtra("note")
+        edit.setText(note.text, TextView.BufferType.EDITABLE)
+        edit.addTextChangedListener(this)
     }
 
     override fun afterTextChanged(s: Editable?) {
         if (s == null) return
         formatter.formatText(s)
-        note.raw = s.toString()
+        note.text = s.toString()
         note.edited = Calendar.getInstance().time
     }
 
