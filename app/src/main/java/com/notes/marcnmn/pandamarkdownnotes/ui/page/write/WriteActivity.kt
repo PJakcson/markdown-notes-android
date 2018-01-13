@@ -6,7 +6,7 @@ import com.notes.marcnmn.pandamarkdownnotes.model.Note
 import com.notes.marcnmn.pandamarkdownnotes.model.NoteModel
 import com.notes.marcnmn.pandamarkdownnotes.model.User
 import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseActivity
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.editor.EditorFragment
+import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.editor.EditorFragment
 import javax.inject.Inject
 
 class WriteActivity : BaseActivity() {

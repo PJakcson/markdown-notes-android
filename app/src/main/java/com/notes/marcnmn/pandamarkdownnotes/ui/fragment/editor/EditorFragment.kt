@@ -1,6 +1,5 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.page.write.editor
+package com.notes.marcnmn.pandamarkdownnotes.ui.fragment.editor
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,14 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.hannesdorfmann.mosby3.mvi.MviBasePresenter
-import com.hannesdorfmann.mosby3.mvi.MviFragment
 import com.hannesdorfmann.mosby3.mvp.MvpView
 import com.notes.marcnmn.pandamarkdownnotes.R
+import com.notes.marcnmn.pandamarkdownnotes.markdown.MarkdownFormatter
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
 import com.notes.marcnmn.pandamarkdownnotes.model.NoteModel
 import com.notes.marcnmn.pandamarkdownnotes.model.User
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.format.MarkdownFormatter
-import dagger.android.support.AndroidSupportInjection
+import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_editor.*
 import java.util.*
 import javax.inject.Inject
@@ -27,7 +25,7 @@ import javax.inject.Inject
 
 private val argNote = "note"
 
-class EditorFragment : MviFragment<EditorView, EditorPresenter>(), TextWatcher {
+class EditorFragment : BaseFragment<EditorView, EditorPresenter>(), TextWatcher {
     @Inject lateinit var formatter: MarkdownFormatter
     @Inject lateinit var model: NoteModel
     @Inject lateinit var presenter: EditorPresenter
@@ -55,11 +53,6 @@ class EditorFragment : MviFragment<EditorView, EditorPresenter>(), TextWatcher {
         edit.formatter = formatter
         edit.setText(note.text, TextView.BufferType.EDITABLE)
         edit.addTextChangedListener(this)
-    }
-
-    override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
     }
 
     override fun createPresenter(): EditorPresenter = presenter

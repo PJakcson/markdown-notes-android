@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.page.write.format
+package com.notes.marcnmn.pandamarkdownnotes.markdown
 
 import android.content.Context
 import android.graphics.Color

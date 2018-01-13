@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment
 import android.view.MenuItem
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseActivity
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes.NotesFragment
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.settings.SettingsFragment
+import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.notes.NotesFragment
+import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {

@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes
+package com.notes.marcnmn.pandamarkdownnotes.ui.fragment.notes
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseFragment
+import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.BaseFragment
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_notes.*
 import javax.inject.Inject

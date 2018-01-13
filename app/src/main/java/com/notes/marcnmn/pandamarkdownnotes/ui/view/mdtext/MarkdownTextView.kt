@@ -4,7 +4,7 @@ import android.content.Context
 import android.text.Spannable
 import android.util.AttributeSet
 import android.widget.TextView
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.format.MarkdownFormatter
+import com.notes.marcnmn.pandamarkdownnotes.markdown.MarkdownFormatter
 
 
 /*

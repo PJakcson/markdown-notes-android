@@ -3,7 +3,7 @@ package com.notes.marcnmn.pandamarkdownnotes.ui.view.mdedit
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.EditText
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.format.MarkdownFormatter
+import com.notes.marcnmn.pandamarkdownnotes.markdown.MarkdownFormatter
 
 
 /*

@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes
+package com.notes.marcnmn.pandamarkdownnotes.ui.fragment.notes
 
 import com.hannesdorfmann.mosby3.mvi.MviBasePresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView

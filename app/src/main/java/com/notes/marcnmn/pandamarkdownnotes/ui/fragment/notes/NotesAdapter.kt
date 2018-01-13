@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes
+package com.notes.marcnmn.pandamarkdownnotes.ui.fragment.notes
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView

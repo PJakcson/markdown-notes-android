@@ -1,4 +1,4 @@
-package com.notes.marcnmn.pandamarkdownnotes.ui.page.home.settings
+package com.notes.marcnmn.pandamarkdownnotes.ui.fragment.settings
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

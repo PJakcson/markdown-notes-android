@@ -2,8 +2,8 @@ package com.notes.marcnmn.pandamarkdownnotes.di
 
 import android.app.Activity
 import android.support.v4.app.Fragment
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.home.notes.NotesFragment
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.write.editor.EditorFragment
+import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.notes.NotesFragment
+import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.editor.EditorFragment
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
