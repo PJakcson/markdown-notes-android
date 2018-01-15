@@ -9,5 +9,6 @@
 
     <!-- editor fragment -->
     <string name="editor_note_secured">Your note is now secure!</string>
+    <string name="editor_note_security_undo">UNDO</string>
     <string name="editor_note_unsecured">Your note is now open!</string>
 </resources>

@@ -22,6 +22,7 @@ import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.BaseFragment
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_editor.*
 import java.util.*
 import javax.inject.Inject
@@ -37,6 +38,7 @@ class EditorFragment : BaseFragment<EditorView, EditorPresenter>(), EditorView {
     @Inject lateinit var presenter: EditorPresenter
 
     private var toggleButton: ImageButton? = null
+    private var secureSbj = PublishSubject.create<Any>()
 
     companion object {
         fun newInstance(n: Note): EditorFragment {
@@ -55,22 +57,28 @@ class EditorFragment : BaseFragment<EditorView, EditorPresenter>(), EditorView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         toggleButton = activity?.findViewById(R.id.btn_toggle_lock)
         super.onViewCreated(view, savedInstanceState)
-
         edit.formatter = formatter
+
+        toggleButton?.let { RxView.clicks(it).subscribe(secureSbj::onNext) }
     }
 
     override fun afterTextChanged(): Observable<Editable?> = RxTextView.afterTextChangeEvents(edit).map { it.editable() }
 
     @SuppressLint("CheckResult")
-    override fun toggleSecureState() = toggleButton?.let { RxView.clicks(it) } ?: Observable.empty<Any>()
+    override fun toggleSecureState() = secureSbj.hide()
 
     override fun render(viewState: EditorViewState) {
-        val sid = if (viewState.secure) R.string.editor_note_secured else R.string.editor_note_unsecured
-        Snackbar.make(view!!, sid, Snackbar.LENGTH_SHORT).show()
         val rid = if (viewState.secure) R.drawable.ic_lock_outline_white else R.drawable.ic_lock_open_white
         toggleButton?.setImageResource(rid)
 
-        if (viewState.initial) edit.setText(viewState.text, TextView.BufferType.EDITABLE)
+        if (viewState.initial) {
+            edit.setText(viewState.text, TextView.BufferType.EDITABLE)
+        } else {
+            val sid = if (viewState.secure) R.string.editor_note_secured else R.string.editor_note_unsecured
+            Snackbar.make(view!!, sid, Snackbar.LENGTH_SHORT)
+                    .setAction(R.string.editor_note_security_undo, secureSbj::onNext)
+                    .show()
+        }
     }
 
     override fun createPresenter() = presenter.withNote(arguments?.getParcelable(argNote))
