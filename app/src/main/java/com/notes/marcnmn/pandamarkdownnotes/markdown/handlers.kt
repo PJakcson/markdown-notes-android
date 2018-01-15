@@ -119,7 +119,7 @@ class HeadlineHandler @Inject constructor(private val ctx: Context) : MdElementH
             val prefix = m.groups[1]
             val text = m.groups[2]
             if (all == null || prefix == null || text == null) continue
-            spans.addAll(easeRange(ctx, s, prefix.range))
+            spans.addAll(easeRange(s, prefix.range))
 
             val hStyle = when (prefix.value.length) {
                 1 -> R.style.MarkdownH1
@@ -138,10 +138,10 @@ class HeadlineHandler @Inject constructor(private val ctx: Context) : MdElementH
 }
 
 fun easeStartEnd(ctx: Context, s: Spannable, start: Int, end: Int): List<CharacterStyle> {
-    return easeRange(ctx, s, IntRange(start, start)).plus(easeRange(ctx, s, IntRange(end, end)))
+    return easeRange(s, IntRange(start, start)).plus(easeRange(s, IntRange(end, end)))
 }
 
-fun easeRange(ctx: Context, s: Spannable, r: IntRange): List<CharacterStyle> {
+fun easeRange(s: Spannable, r: IntRange): List<CharacterStyle> {
     var end = if (r.start > r.endInclusive + 1) r.start else r.endInclusive + 1
     end = if (end > s.length) s.length - 1 else end
     val start = if (r.start >= s.length) s.length - 1 else r.start

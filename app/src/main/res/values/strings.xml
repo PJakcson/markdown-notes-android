@@ -5,4 +5,9 @@
     <string name="title_tags">Tags</string>
     <string name="title_trash">Trash</string>
     <string name="title_settings">Settings</string>
+
+
+    <!-- editor fragment -->
+    <string name="editor_note_secured">Your note is now secure!</string>
+    <string name="editor_note_unsecured">Your note is now open!</string>
 </resources>

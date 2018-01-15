@@ -29,6 +29,7 @@ class NotesPresenter @Inject constructor(val model: NoteModel, val nav: Navigato
 
         val selObs = intent { it.noteSelectedIntent().map { it.id } }
                 .startWith("")
+                .doOnNext { model.select(it) }
                 .doOnNext(this::handleSelected)
 
         val obs = Observables.combineLatest(model.notes, selObs)

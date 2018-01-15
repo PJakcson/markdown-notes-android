@@ -13,6 +13,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NoteModel @Inject constructor(var storage: Storage) {
+    var selectedId: BehaviorSubject<String> = BehaviorSubject.create()
     val notes: BehaviorSubject<List<Note>> = BehaviorSubject.createDefault(listOf())
 
     init {
@@ -33,6 +34,8 @@ class NoteModel @Inject constructor(var storage: Storage) {
 
         Handler().post { flush() }
     }
+
+    fun select(id: String) = selectedId.onNext(id)
 
     fun addItem(n: Note) {
         val f = notes.value.toMutableList()

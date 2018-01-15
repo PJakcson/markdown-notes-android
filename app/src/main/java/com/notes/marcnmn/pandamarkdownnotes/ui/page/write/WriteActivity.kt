@@ -5,8 +5,8 @@ import com.notes.marcnmn.pandamarkdownnotes.R
 import com.notes.marcnmn.pandamarkdownnotes.model.Note
 import com.notes.marcnmn.pandamarkdownnotes.model.NoteModel
 import com.notes.marcnmn.pandamarkdownnotes.model.User
-import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseActivity
 import com.notes.marcnmn.pandamarkdownnotes.ui.fragment.editor.EditorFragment
+import com.notes.marcnmn.pandamarkdownnotes.ui.page.BaseActivity
 import javax.inject.Inject
 
 class WriteActivity : BaseActivity() {
@@ -24,4 +24,6 @@ class WriteActivity : BaseActivity() {
                 .replace(R.id.container, EditorFragment.newInstance(note))
                 .commit()
     }
+
+    override fun isSecured(): Boolean = note.secure
 }
